@@ -2,7 +2,7 @@
 
 import random
 import time
-
+import serial
 from paho.mqtt import client as mqtt_client
 
 
@@ -21,6 +21,14 @@ class Telemetry(object):
         self.client_id = f'publish-{random.randint(0, 1000)}'
         # self.username = 'emqx'
         # self.password = 'public'
+
+        ## reading serial stuff
+        self.ser_ = serial.Serial( port='/dev/ttyUSB0',
+                        baudrate = 9600,
+                        parity=serial.PARITY_NONE,
+                        stopbits=serial.STOPBITS_ONE,
+                        bytesize=serial.EIGHTBITS,
+                        timeout=1)
     
     def connect_to_mqtt(self) -> mqtt_client:
         def on_connect(client, userdata, flags, rc):
@@ -45,16 +53,18 @@ class Telemetry(object):
                 result = client.publish(topic, msg)
                 # result: [0, 1]
                 status = result[0]
-                if status == 0:
-                    print(f"Send `{msg}` to topic `{topic}`")
-                else:
-                    print(f"Failed to send message to topic {topic}")
+                # if status == 0:
+                #     print(f"Send `{msg}` to topic `{topic}`")
+                # else:
+                #     print(f"Failed to send message to topic {topic}")
             msg_count += 1
             if msg_count > 1000:
                 break
 
 
-    def run(self):
+    def update(self):
+        x=self.ser.readline()
+        print (x),
         client = self.connect_to_mqtt()
         client.loop_start()
         self.publisher(client)
@@ -63,7 +73,7 @@ class Telemetry(object):
 def main():
     try :
         evos_pub=Telemetry()
-        evos_pub.run()
+        evos_pub.update()
     except KeyboardInterrupt:
         print("Shutting down")
 
