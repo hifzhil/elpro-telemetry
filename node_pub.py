@@ -23,12 +23,12 @@ class Telemetry(object):
         # self.password = 'public'
 
         ## reading serial stuff
-        self.ser_ = serial.Serial( port='/dev/ttyUSB0',
-                        baudrate = 9600,
-                        parity=serial.PARITY_NONE,
-                        stopbits=serial.STOPBITS_ONE,
-                        bytesize=serial.EIGHTBITS,
-                        timeout=1)
+        # self.ser_ = serial.Serial( port='/dev/ttyUSB0',
+        #                 baudrate = 9600,
+        #                 parity=serial.PARITY_NONE,
+        #                 stopbits=serial.STOPBITS_ONE,
+        #                 bytesize=serial.EIGHTBITS,
+        #                 timeout=1)
     
     def connect_to_mqtt(self) -> mqtt_client:
         def on_connect(client, userdata, flags, rc):
@@ -63,8 +63,8 @@ class Telemetry(object):
 
 
     def update(self):
-        x=self.ser_.readline()
-        print (x),
+        # x=self.ser_.readline()
+        # print (x),
         client = self.connect_to_mqtt()
         client.loop_start()
         self.publisher(client)
