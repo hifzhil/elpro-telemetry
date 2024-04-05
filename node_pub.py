@@ -48,9 +48,9 @@ class Telemetry(object):
     def publisher(self, client):
         msg_count = 1
         while True:
-            time.sleep(1)
+            time.sleep(0.5)
             for topic, msg in zip(self.topics, self.messages) :
-                result = client.publish(topic, msg)
+                result = client.publish(topic, str(int(msg)+1))
                 # result: [0, 1]
                 status = result[0]
                 # if status == 0:
