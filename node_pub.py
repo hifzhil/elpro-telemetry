@@ -63,7 +63,7 @@ class Telemetry(object):
 
 
     def update(self):
-        x=self.ser.readline()
+        x=self.ser_.readline()
         print (x),
         client = self.connect_to_mqtt()
         client.loop_start()
