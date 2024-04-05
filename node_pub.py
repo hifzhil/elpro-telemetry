@@ -17,7 +17,7 @@ class Telemetry(object):
         self.rpm_ = 1000
         self.speed_ = 38
         self.temp_ = 76
-        self.messages = ["38", "1000", "76"]
+        self.messages = ["38", "1800", "76"]
         self.client_id = f'publish-{random.randint(0, 1000)}'
         # self.username = 'emqx'
         # self.password = 'public'
